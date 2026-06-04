@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0D1B2A">
+<title>Club Borregos · Informes de Ingreso</title>
+<style>
+  :root {
+    --bg: #0D1B2A;
+    --bg2: #132234;
+    --bg3: #1a2e45;
+    --gold: #C8973A;
+    --gold-light: #F0B84A;
+    --gold-dim: rgba(200,151,58,0.15);
+    --gold-border: rgba(200,151,58,0.35);
+    --blue: #5AA0FF;
+    --blue-dim: rgba(90,160,255,0.12);
+    --blue-border: rgba(90,160,255,0.3);
+    --green: #34C759;
+    --green-dim: rgba(52,199,89,0.12);
+    --green-border: rgba(52,199,89,0.3);
+    --amber: #FFB41E;
+    --amber-dim: rgba(255,180,30,0.1);
+    --amber-border: rgba(255,180,30,0.25);
+    --t1: rgba(255,255,255,0.92);
+    --t2: rgba(255,255,255,0.55);
+    --t3: rgba(255,255,255,0.3);
+    --border: rgba(255,255,255,0.08);
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: -apple-system, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg);
+    color: var(--t1);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* SPLASH */
+  #splash {
+    position: fixed; inset: 0; z-index: 100;
+    background: var(--bg);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 40px 32px; text-align: center;
+    transition: opacity .4s ease, transform .4s ease;
+  }
+  #splash.out { opacity: 0; transform: scale(.97); pointer-events: none; }
+
+  .splash-logo {
+    width: 80px; height: 80px; border-radius: 50%;
+    background: var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px; font-weight: 800; color: var(--bg);
+    margin-bottom: 24px;
+    animation: pulse 2.5s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 0 0 rgba(200,151,58,0.4); }
+    50% { box-shadow: 0 0 0 14px rgba(200,151,58,0); }
+  }
+  .splash-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+  .splash-sub { font-size: 14px; color: var(--t2); margin-bottom: 10px; }
+  .splash-badge {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    color: var(--gold); padding: 5px 14px; border-radius: 20px;
+    margin-bottom: 40px;
+  }
+  .splash-btn {
+    width: 100%; max-width: 320px;
+    background: var(--gold); color: var(--bg);
+    border: none; border-radius: 50px;
+    font-size: 16px; font-weight: 700;
+    padding: 17px 32px; cursor: pointer;
+    transition: transform .15s, opacity .15s;
+    box-shadow: 0 8px 28px rgba(200,151,58,0.4);
+  }
+  .splash-btn:active { transform: scale(.97); opacity: .9; }
+  .splash-note { font-size: 13px; color: var(--t3); margin-top: 14px; }
+
+  /* APP */
+  #app { display: none; max-width: 480px; margin: 0 auto; padding-bottom: 40px; }
+  #app.visible { display: block; animation: fadeUp .4s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .animate-in { animation: fadeUp .4s ease forwards; }
+
+  /* HEADER */
+  .top-bar {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: blur(12px);
+  }
+  .tb-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    background: var(--gold); color: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; font-weight: 800; flex-shrink: 0;
+  }
+  .tb-title { font-size: 16px; font-weight: 800; color: #fff; }
+  .tb-sub { font-size: 11px; color: var(--t2); margin-top: 1px; }
+  .tb-cta {
+    margin-left: auto;
+    background: var(--gold); color: var(--bg);
+    border: none; border-radius: 20px;
+    font-size: 12px; font-weight: 700;
+    padding: 8px 16px; cursor: pointer;
+    text-decoration: none; white-space: nowrap; flex-shrink: 0;
+    transition: opacity .15s;
+  }
+  .tb-cta:active { opacity: .85; }
+
+  /* HERO */
+  .hero {
+    margin: 16px 16px 0;
+    background: linear-gradient(135deg, var(--bg2) 0%, #1a2e45 100%);
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+    padding: 24px 20px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '🏈';
+    position: absolute; right: -8px; top: -8px;
+    font-size: 80px; opacity: .07;
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 8px;
+  }
+  .hero-title {
+    font-size: 24px; font-weight: 800;
+    color: #fff; line-height: 1.2; margin-bottom: 8px;
+  }
+  .hero-title span { color: var(--gold); }
+  .hero-desc {
+    font-size: 14px; color: var(--t2); line-height: 1.6; margin-bottom: 16px;
+  }
+  .hero-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill {
+    font-size: 11px; font-weight: 600;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--t2); padding: 5px 12px; border-radius: 20px;
+  }
+
+  /* SECTION */
+  .section { padding: 24px 16px 0; }
+  .section-eyebrow {
+    font-size: 11px; font-weight: 700;
+    letter-spacing: .15em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 4px;
+  }
+  .section-title {
+    font-size: 20px; font-weight: 800; color: #fff;
+    margin-bottom: 4px;
+  }
+  .section-sub {
+    font-size: 13px; color: var(--t2); line-height: 1.5; margin-bottom: 16px;
+  }
+
+  /* PROCESO DE INGRESO */
+  .proceso-steps { display: flex; flex-direction: column; gap: 0; }
+  .paso {
+    display: flex; gap: 14px; align-items: flex-start;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .paso:last-child { border-bottom: none; }
+  .paso-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    color: var(--gold); font-size: 13px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 2px;
+  }
+  .paso-num.done {
+    background: var(--green-dim); border-color: var(--green-border); color: var(--green);
+  }
+  .paso-title {
+    font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 3px; line-height: 1.3;
+  }
+  .paso-desc { font-size: 12px; color: var(--t2); line-height: 1.5; }
+
+  /* DISCIPLINAS */
+  .disc-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 12px;
+  }
+  .disc-header {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 14px;
+  }
+  .disc-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .disc-name { font-size: 18px; font-weight: 800; color: #fff; margin-bottom: 3px; }
+  .disc-desc { font-size: 12px; color: var(--t2); line-height: 1.4; }
+  .disc-grupos { padding: 14px 18px; display: flex; flex-direction: column; gap: 10px; }
+  .grupo-row {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  }
+  .grupo-info { flex: 1; }
+  .grupo-name {
+    font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 2px;
+  }
+  .grupo-dias { font-size: 12px; color: var(--t2); }
+  .grupo-badge {
+    font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 6px; margin-left: 6px;
+  }
+  .horario-chip {
+    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    border-radius: 8px; padding: 6px 10px;
+    font-size: 12px; font-weight: 800; color: var(--gold);
+    white-space: nowrap; flex-shrink: 0; text-align: center;
+  }
+  .grupo-nota {
+    font-size: 11px; color: var(--t3); font-style: italic; margin-top: 5px;
+  }
+
+  /* COSTOS */
+  .costo-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden; margin-bottom: 10px;
+  }
+  .costo-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .costo-label { font-size: 14px; font-weight: 700; color: #fff; }
+  .costo-sub { font-size: 12px; color: var(--t2); margin-top: 2px; }
+  .costo-amount {
+    font-size: 22px; font-weight: 800; color: var(--gold);
+    flex-shrink: 0;
+  }
+  .costo-detail { padding: 12px 18px; }
+  .costo-row {
+    display: flex; justify-content: space-between;
+    align-items: center; padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+  .costo-row:last-child { border-bottom: none; }
+  .cr-label { color: var(--t2); }
+  .cr-value { font-weight: 700; color: #fff; }
+  .cr-value.gold { color: var(--gold); }
+
+  /* INFO BOXES */
+  .info-box {
+    background: var(--amber-dim);
+    border: 1px solid var(--amber-border);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    font-size: 13px; color: var(--t1); line-height: 1.5;
+    margin-bottom: 10px;
+  }
+  .info-box.blue {
+    background: var(--blue-dim); border-color: var(--blue-border);
+  }
+  .info-box.green {
+    background: var(--green-dim); border-color: var(--green-border);
+  }
+  .info-box.gold {
+    background: var(--gold-dim); border-color: var(--gold-border);
+  }
+
+  /* WHAT TO BRING */
+  .bring-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 10px;
+  }
+  .bring-item {
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 12px 14px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .bring-emoji { font-size: 20px; flex-shrink: 0; }
+  .bring-label { font-size: 12px; font-weight: 600; color: var(--t1); line-height: 1.3; }
+
+  /* POST REGISTRO */
+  .post-step {
+    display: flex; gap: 12px; align-items: flex-start;
+    background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius-sm); padding: 14px;
+    margin-bottom: 8px;
+  }
+  .ps-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--blue-dim); border: 1px solid var(--blue-border);
+    color: var(--blue); font-size: 12px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ps-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 3px; }
+  .ps-desc { font-size: 12px; color: var(--t2); line-height: 1.5; }
+
+  /* CTA FINAL */
+  .cta-final {
+    margin: 24px 16px 0;
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+    border: 1px solid var(--gold-border);
+    border-radius: var(--radius);
+    padding: 28px 20px; text-align: center;
+    position: relative; overflow: hidden;
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(200,151,58,0.1) 0%, transparent 55%);
+  }
+  .cta-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+  .cta-title span { color: var(--gold); }
+  .cta-sub { font-size: 14px; color: var(--t2); margin-bottom: 20px; line-height: 1.5; }
+  .cta-btn {
+    display: block; width: 100%;
+    background: var(--gold); color: var(--bg);
+    border: none; border-radius: 50px;
+    font-size: 15px; font-weight: 700;
+    padding: 16px; cursor: pointer;
+    text-decoration: none; margin-bottom: 10px;
+    box-shadow: 0 8px 24px rgba(200,151,58,0.4);
+    transition: opacity .15s;
+  }
+  .cta-btn:active { opacity: .85; }
+  .cta-note { font-size: 12px; color: var(--t3); }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">🏈</div>
+  <div class="splash-title">Club Borregos<br>Santa Anita</div>
+  <div class="splash-sub">Informes de ingreso · Temporada 2025</div>
+  <div class="splash-badge">🏀 Basquetbol · 🏐 Voleibol · 🏈 Tochito</div>
+  <button class="splash-btn" onclick="startApp()">Ver información completa →</button>
+  <div class="splash-note">Para nuevos integrantes y sus familias</div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <div class="top-bar">
+    <div class="tb-icon">🏈</div>
+    <div>
+      <div class="tb-title">Club Borregos</div>
+      <div class="tb-sub">Santa Anita · Informes de ingreso</div>
+    </div>
+    <a href="https://wa.me/525654324415?text=Hola%2C%20me%20interesa%20inscribir%20a%20mi%20hijo%20en%20Club%20Borregos%20Santa%20Anita" target="_blank" class="tb-cta">Informes 💬</a>
+  </div>
+
+  <!-- Hero -->
+  <div class="hero animate-in">
+    <div class="hero-eyebrow">✦ Club Deportivo · Prepa TEC Santa Anita</div>
+    <div class="hero-title">Más que deporte —<br><span>formación de vida</span></div>
+    <div class="hero-desc">En Club Borregos buscamos que cada alumno desarrolle disciplina, seguridad, amistades y amor por el deporte en un ambiente positivo y formativo.</div>
+    <div class="hero-pills">
+      <span class="pill">📍 Prepa TEC Santa Anita</span>
+      <span class="pill">👦 7 a 14 años</span>
+      <span class="pill">🗓️ Lun–Jue 6–7:30 PM</span>
+    </div>
+  </div>
+
+  <!-- Proceso de ingreso -->
+  <div class="section">
+    <div class="section-eyebrow">Primeros pasos</div>
+    <div class="section-title">Proceso de ingreso</div>
+    <div class="section-sub">Así funciona el proceso para unirse al club — paso a paso y sin complicaciones.</div>
+
+    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:6px 18px 14px;">
+      <div class="proceso-steps">
+
+        <div class="paso">
+          <div class="paso-num done">✓</div>
+          <div>
+            <div class="paso-title">Contacto vía WhatsApp</div>
+            <div class="paso-desc">Escríbenos para resolver tus dudas sobre disciplinas, grupos, horarios y costos.</div>
+          </div>
+        </div>
+
+        <div class="paso">
+          <div class="paso-num">2</div>
+          <div>
+            <div class="paso-title">Registro para clase de prueba</div>
+            <div class="paso-desc">Se agenda una clase de prueba y se genera un PIN de acceso para el participante.</div>
+          </div>
+        </div>
+
+        <div class="paso">
+          <div class="paso-num">3</div>
+          <div>
+            <div class="paso-title">Asiste a la clase de prueba</div>
+            <div class="paso-desc">Tu hijo vive el entrenamiento de primera mano — sin compromiso y sin costo.</div>
+          </div>
+        </div>
+
+        <div class="paso">
+          <div class="paso-num">4</div>
+          <div>
+            <div class="paso-title">Sesión informativa</div>
+            <div class="paso-desc">Te informamos sobre el proceso de registro, uniformes, reglamento y todo lo que necesitas saber.</div>
+          </div>
+        </div>
+
+        <div class="paso">
+          <div class="paso-num">5</div>
+          <div>
+            <div class="paso-title">Se define la fecha de ingreso</div>
+            <div class="paso-desc">Juntos determinamos la mejor fecha para que tu hijo se integre al grupo.</div>
+          </div>
+        </div>
+
+        <div class="paso">
+          <div class="paso-num">6</div>
+          <div>
+            <div class="paso-title">Registro y pago</div>
+            <div class="paso-desc">Se realiza el registro formal y el pago correspondiente de inscripción y primera mensualidad.</div>
+          </div>
+        </div>
+
+        <div class="paso" style="border-bottom:none;">
+          <div class="paso-num" style="background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);">🏅</div>
+          <div>
+            <div class="paso-title">¡Inicia entrenamientos!</div>
+            <div class="paso-desc">Tu hijo ya es parte oficial de Club Borregos Santa Anita. ¡Bienvenido al equipo!</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Qué pasa después del registro -->
+  <div class="section">
+    <div class="section-eyebrow">Después del registro</div>
+    <div class="section-title">¿Qué llega y cuándo?</div>
+    <div class="section-sub">Una vez que aparezcan en el sistema, recibirán lo siguiente:</div>
+
+    <div class="post-step">
+      <div class="ps-num">1</div>
+      <div>
+        <div class="ps-title">3 documentos vía WhatsApp</div>
+        <div class="ps-desc">Información general del club, reglamento y políticas — todo en un solo mensaje.</div>
+      </div>
+    </div>
+
+    <div class="post-step">
+      <div class="ps-num">2</div>
+      <div>
+        <div class="ps-title">Correo con documentos para firma</div>
+        <div class="ps-desc">Recibirás un correo con los documentos oficiales para firma electrónica.</div>
+      </div>
+    </div>
+
+    <div class="post-step">
+      <div class="ps-num">3</div>
+      <div>
+        <div class="ps-title">PIN de acceso mensual</div>
+        <div class="ps-desc">Un segundo correo llegará con el PIN de acceso del mes correspondiente para ingresar a las instalaciones.</div>
+      </div>
+    </div>
+
+    <div class="post-step" style="margin-bottom:0;">
+      <div class="ps-num">4</div>
+      <div>
+        <div class="ps-title">Alta en el chat del grupo</div>
+        <div class="ps-desc">Se les agregará al chat de WhatsApp de su disciplina para recibir actualizaciones importantes. <span style="color:var(--gold);">Si no los agregan en los primeros días, favor de recordarlo.</span></div>
+      </div>
+    </div>
+
+    <div class="info-box blue" style="margin-top:12px;">
+      💡 <strong>Consejo:</strong> Guarda el número de Ana Jasso en tus contactos desde el primer día para recibir correctamente todos los mensajes y documentos.
+    </div>
+  </div>
+
+  <!-- Disciplinas -->
+  <div class="section">
+    <div class="section-eyebrow">Oferta deportiva</div>
+    <div class="section-title">Nuestras disciplinas</div>
+    <div class="section-sub">Grupos organizados por edad y/o nivel deportivo. Lunes a jueves de 6:00 a 7:30 PM.</div>
+
+    <!-- Basquetbol -->
+    <div class="disc-card animate-in">
+      <div class="disc-header" style="background:linear-gradient(135deg,rgba(200,151,58,0.1) 0%,transparent 60%);">
+        <div class="disc-icon" style="background:var(--gold-dim);border:1px solid var(--gold-border);">🏀</div>
+        <div>
+          <div class="disc-name">Basquetbol</div>
+          <div class="disc-desc">Coordinación, estrategia, trabajo en equipo y confianza dentro y fuera de la cancha.</div>
+        </div>
+      </div>
+      <div class="disc-grupos">
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo A <span style="font-size:11px;color:var(--t3);font-weight:400;">· 12–14 años</span></div>
+            <div class="grupo-dias">Lunes y miércoles</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo B <span style="font-size:11px;color:var(--t3);font-weight:400;">· 7–11 años</span></div>
+            <div class="grupo-dias">Martes y jueves</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Voleibol -->
+    <div class="disc-card animate-in">
+      <div class="disc-header" style="background:linear-gradient(135deg,rgba(90,160,255,0.1) 0%,transparent 60%);">
+        <div class="disc-icon" style="background:var(--blue-dim);border:1px solid var(--blue-border);">🏐</div>
+        <div>
+          <div class="disc-name">Voleibol</div>
+          <div class="disc-desc">Técnica, comunicación y desarrollo deportivo según el nivel de cada alumno.</div>
+        </div>
+      </div>
+      <div class="disc-grupos">
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo A
+              <span class="grupo-badge" style="background:var(--blue-dim);border:1px solid var(--blue-border);color:var(--blue);">Avanzados</span>
+            </div>
+            <div class="grupo-dias">Lunes y miércoles</div>
+            <div class="grupo-nota">Para alumnos con experiencia previa.</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo B
+              <span class="grupo-badge" style="background:var(--green-dim);border:1px solid var(--green-border);color:var(--green);">Principiantes</span>
+            </div>
+            <div class="grupo-dias">Martes y jueves</div>
+            <div class="grupo-nota">Ideal para iniciar desde cero.</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tochito -->
+    <div class="disc-card animate-in">
+      <div class="disc-header" style="background:linear-gradient(135deg,rgba(52,199,89,0.1) 0%,transparent 60%);">
+        <div class="disc-icon" style="background:var(--green-dim);border:1px solid var(--green-border);">🏈</div>
+        <div>
+          <div class="disc-name">Tochito</div>
+          <div class="disc-desc">Velocidad, agilidad y trabajo en equipo en una disciplina dinámica y divertida.</div>
+        </div>
+      </div>
+      <div class="disc-grupos">
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo A <span style="font-size:11px;color:var(--t3);font-weight:400;">· 7–10 años</span></div>
+            <div class="grupo-dias">Lunes y miércoles</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+        <div class="grupo-row">
+          <div class="grupo-info">
+            <div class="grupo-name">Grupo B <span style="font-size:11px;color:var(--t3);font-weight:400;">· 11–14 años</span></div>
+            <div class="grupo-dias">Martes y jueves</div>
+          </div>
+          <div class="horario-chip">6:00–7:30 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Costos -->
+  <div class="section">
+    <div class="section-eyebrow">Inversión</div>
+    <div class="section-title">Costos del semestre</div>
+    <div class="section-sub">Los costos aplican por alumno y por disciplina.</div>
+
+    <div class="costo-card">
+      <div class="costo-header">
+        <div>
+          <div class="costo-label">Inscripción</div>
+          <div class="costo-sub">Pago único al ingresar · aparta tu lugar</div>
+        </div>
+        <div class="costo-amount">$600</div>
+      </div>
+    </div>
+
+    <div class="costo-card">
+      <div class="costo-header">
+        <div>
+          <div class="costo-label">Mensualidad</div>
+          <div class="costo-sub">Se paga los primeros 5 días del mes previo</div>
+        </div>
+        <div class="costo-amount">$900</div>
+      </div>
+      <div class="costo-detail">
+        <div class="costo-row">
+          <div class="cr-label">Mensualidad 1 · Septiembre</div>
+          <div class="cr-value">1–5 agosto</div>
+        </div>
+        <div class="costo-row">
+          <div class="cr-label">Mensualidad 2 · Octubre</div>
+          <div class="cr-value">1–5 septiembre</div>
+        </div>
+        <div class="costo-row">
+          <div class="cr-label">Mensualidad 3 · Noviembre</div>
+          <div class="cr-value">1–5 octubre</div>
+        </div>
+        <div class="costo-row">
+          <div class="cr-label">Mensualidad 4 · Diciembre</div>
+          <div class="cr-value">1–5 noviembre</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="costo-card">
+      <div class="costo-header" style="background:linear-gradient(135deg,rgba(90,160,255,0.08) 0%,transparent 60%);">
+        <div>
+          <div class="costo-label" style="color:var(--blue);">⭐ Plan Semestral</div>
+          <div class="costo-sub">Todo el semestre en un solo pago · solo en julio</div>
+        </div>
+        <div class="costo-amount" style="color:var(--blue);">$4,000</div>
+      </div>
+      <div class="costo-detail">
+        <div class="costo-row">
+          <div class="cr-label">✓ Inscripción incluida</div>
+          <div class="cr-value gold">Sin cobro extra</div>
+        </div>
+        <div class="costo-row">
+          <div class="cr-label">✓ 4 mensualidades</div>
+          <div class="cr-value gold">Todo cubierto</div>
+        </div>
+        <div class="costo-row" style="border-bottom:none;">
+          <div class="cr-label">⏰ Válido únicamente en julio</div>
+          <div class="cr-value" style="color:var(--blue);">Ahorra $1,100</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box">⚠️ Las mensualidades deben estar cubiertas <strong>antes</strong> del mes de entrenamiento en curso. Pagos en eventos.tec.mx</div>
+  </div>
+
+  <!-- Qué traer -->
+  <div class="section">
+    <div class="section-eyebrow">Equipamiento</div>
+    <div class="section-title">¿Qué traer?</div>
+    <div class="section-sub">Lo que necesita tu hijo para los entrenamientos desde el primer día.</div>
+
+    <div class="bring-grid">
+      <div class="bring-item"><div class="bring-emoji">👟</div><div class="bring-label">Tenis deportivos</div></div>
+      <div class="bring-item"><div class="bring-emoji">🩳</div><div class="bring-label">Ropa deportiva cómoda</div></div>
+      <div class="bring-item"><div class="bring-emoji">💧</div><div class="bring-label">Termo con agua</div></div>
+      <div class="bring-item"><div class="bring-emoji">🍱</div><div class="bring-label">Snack ligero</div></div>
+      <div class="bring-item"><div class="bring-emoji">🩹</div><div class="bring-label">Rodilleras o tobilleras si las usa</div></div>
+      <div class="bring-item"><div class="bring-emoji">😊</div><div class="bring-label">¡Muchas ganas!</div></div>
+    </div>
+
+    <div class="info-box green">✅ El <strong>uniforme oficial</strong> se adquiere al ingresar. Te informamos opciones y costos durante la sesión informativa.</div>
+  </div>
+
+  <!-- CTA Final -->
+  <div class="cta-final">
+    <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">✦ ¿Listo para unirte?</div>
+    <div class="cta-title">El primer paso<br>es <span>escribirnos</span></div>
+    <div class="cta-sub">Resolvemos tus dudas y agendamos la clase de prueba sin ningún compromiso.</div>
+    <a href="https://wa.me/525654324415?text=Hola%2C%20me%20interesa%20inscribir%20a%20mi%20hijo%20en%20Club%20Borregos%20Santa%20Anita.%20%C2%BFPueden%20darme%20informes%3F" target="_blank" class="cta-btn">Escribir por WhatsApp 💬</a>
+    <div class="cta-note">📍 Prepa TEC Santa Anita · Guadalajara<br>Club Borregos · Temporada 2025</div>
+  </div>
+
+</div>
+
+<script>
+  function startApp() {
+    var s = document.getElementById('splash');
+    var a = document.getElementById('app');
+    s.classList.add('out');
+    setTimeout(function() {
+      s.style.display = 'none';
+      a.classList.add('visible');
+    }, 400);
+  }
+</script>
+</body>
+</html>
