@@ -7,26 +7,34 @@
 <title>Club Borregos · Informes de Ingreso</title>
 <style>
   :root {
-    --bg: #0D1B2A;
-    --bg2: #132234;
-    --bg3: #1a2e45;
-    --gold: #C8973A;
-    --gold-light: #F0B84A;
-    --gold-dim: rgba(200,151,58,0.15);
-    --gold-border: rgba(200,151,58,0.35);
-    --blue: #5AA0FF;
-    --blue-dim: rgba(90,160,255,0.12);
-    --blue-border: rgba(90,160,255,0.3);
+    /* Club Borregos — Negro, Azul Reflex, Gris, Blanco */
+    --bg: #0A0C10;
+    --bg2: #12151C;
+    --bg3: #1C2030;
+    --blue: #003DA5;        /* Azul Reflex oficial */
+    --blue-light: #1A56C4;
+    --blue-bright: #4A7FE0;
+    --blue-dim: rgba(0,61,165,0.2);
+    --blue-border: rgba(0,61,165,0.45);
+    --blue-mid: rgba(26,86,196,0.15);
+    --gray: #8A8F9E;
+    --gray-light: #B0B5C4;
+    --gray-dim: rgba(138,143,158,0.12);
+    --gray-border: rgba(138,143,158,0.25);
+    --white: #FFFFFF;
+    --gold: #C8973A;        /* Acento dorado suave — sello TEC */
+    --gold-dim: rgba(200,151,58,0.12);
+    --gold-border: rgba(200,151,58,0.3);
     --green: #34C759;
     --green-dim: rgba(52,199,89,0.12);
     --green-border: rgba(52,199,89,0.3);
     --amber: #FFB41E;
     --amber-dim: rgba(255,180,30,0.1);
     --amber-border: rgba(255,180,30,0.25);
-    --t1: rgba(255,255,255,0.92);
+    --t1: rgba(255,255,255,0.95);
     --t2: rgba(255,255,255,0.55);
-    --t3: rgba(255,255,255,0.3);
-    --border: rgba(255,255,255,0.08);
+    --t3: rgba(255,255,255,0.28);
+    --border: rgba(255,255,255,0.07);
     --radius: 16px;
     --radius-sm: 10px;
   }
@@ -55,15 +63,15 @@
   .splash-logo {
     width: 100px; height: 100px; border-radius: 50%;
     background: var(--bg2);
-    border: 2px solid var(--gold-border);
+    border: 2px solid var(--blue-border);
     display: flex; align-items: center; justify-content: center;
     margin-bottom: 24px;
     animation: pulse 2.5s ease-in-out infinite;
     overflow: hidden; padding: 12px;
   }
   @keyframes pulse {
-    0%,100% { box-shadow: 0 0 0 0 rgba(200,151,58,0.4); }
-    50% { box-shadow: 0 0 0 14px rgba(200,151,58,0); }
+    0%,100% { box-shadow: 0 0 0 0 rgba(0,61,165,0.5); }
+    50% { box-shadow: 0 0 0 16px rgba(0,61,165,0); }
   }
   .splash-title { font-size: 26px; font-weight: 800; color: #fff; margin-bottom: 6px; line-height: 1.2; }
   .splash-sub { font-size: 14px; color: var(--t2); margin-bottom: 10px; }
@@ -71,18 +79,18 @@
     display: inline-block;
     font-size: 11px; font-weight: 700;
     letter-spacing: .1em; text-transform: uppercase;
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    color: var(--gold); padding: 5px 14px; border-radius: 20px;
+    background: var(--blue-dim); border: 1px solid var(--blue-border);
+    color: var(--blue-bright); padding: 5px 14px; border-radius: 20px;
     margin-bottom: 40px;
   }
   .splash-btn {
     width: 100%; max-width: 320px;
-    background: var(--gold); color: var(--bg);
+    background: var(--blue); color: var(--white);
     border: none; border-radius: 50px;
     font-size: 16px; font-weight: 700;
     padding: 17px 32px; cursor: pointer;
     transition: transform .15s, opacity .15s;
-    box-shadow: 0 8px 28px rgba(200,151,58,0.4);
+    box-shadow: 0 8px 28px rgba(0,61,165,0.5);
   }
   .splash-btn:active { transform: scale(.97); opacity: .9; }
   .splash-note { font-size: 13px; color: var(--t3); margin-top: 14px; }
@@ -108,7 +116,7 @@
   }
   .tb-icon {
     width: 36px; height: 36px; border-radius: 10px;
-    background: var(--bg3); border: 1px solid var(--gold-border);
+    background: var(--blue-dim); border: 1px solid var(--blue-border);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; padding: 5px; overflow: hidden;
   }
@@ -116,23 +124,25 @@
   .tb-sub { font-size: 11px; color: var(--t2); margin-top: 1px; }
   .tb-cta {
     margin-left: auto;
-    background: var(--gold); color: var(--bg);
+    background: var(--blue); color: var(--white);
     border: none; border-radius: 20px;
     font-size: 12px; font-weight: 700;
     padding: 8px 16px; cursor: pointer;
     text-decoration: none; white-space: nowrap; flex-shrink: 0;
     transition: opacity .15s;
+    box-shadow: 0 4px 14px rgba(0,61,165,0.4);
   }
   .tb-cta:active { opacity: .85; }
 
   /* HERO */
   .hero {
     margin: 16px 16px 0;
-    background: linear-gradient(135deg, var(--bg2) 0%, #1a2e45 100%);
-    border: 1px solid var(--gold-border);
+    background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+    border: 1px solid var(--blue-border);
     border-radius: var(--radius);
     padding: 24px 20px;
     position: relative; overflow: hidden;
+    background-image: radial-gradient(ellipse at 80% 0%, rgba(0,61,165,0.2) 0%, transparent 55%);
   }
   .hero::before {
     content: '';
@@ -146,13 +156,13 @@
   .hero-eyebrow {
     font-size: 11px; font-weight: 700;
     letter-spacing: .15em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 8px;
+    color: var(--blue-bright); margin-bottom: 8px;
   }
   .hero-title {
     font-size: 24px; font-weight: 800;
     color: #fff; line-height: 1.2; margin-bottom: 8px;
   }
-  .hero-title span { color: var(--gold); }
+  .hero-title span { color: var(--blue-bright); }
   .hero-desc {
     font-size: 14px; color: var(--t2); line-height: 1.6; margin-bottom: 16px;
   }
@@ -169,7 +179,7 @@
   .section-eyebrow {
     font-size: 11px; font-weight: 700;
     letter-spacing: .15em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 4px;
+    color: var(--blue-bright); margin-bottom: 4px;
   }
   .section-title {
     font-size: 20px; font-weight: 800; color: #fff;
@@ -190,8 +200,8 @@
   .paso:last-child { border-bottom: none; }
   .paso-num {
     width: 32px; height: 32px; border-radius: 50%;
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
-    color: var(--gold); font-size: 13px; font-weight: 800;
+    background: var(--blue-dim); border: 1px solid var(--blue-border);
+    color: var(--blue-bright); font-size: 13px; font-weight: 800;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; margin-top: 2px;
   }
@@ -240,9 +250,9 @@
     padding: 2px 8px; border-radius: 6px; margin-left: 6px;
   }
   .horario-chip {
-    background: var(--gold-dim); border: 1px solid var(--gold-border);
+    background: var(--blue-dim); border: 1px solid var(--blue-border);
     border-radius: 8px; padding: 6px 10px;
-    font-size: 12px; font-weight: 800; color: var(--gold);
+    font-size: 12px; font-weight: 800; color: var(--blue-bright);
     white-space: nowrap; flex-shrink: 0; text-align: center;
   }
   .grupo-nota {
@@ -264,7 +274,7 @@
   .costo-label { font-size: 14px; font-weight: 700; color: #fff; }
   .costo-sub { font-size: 12px; color: var(--t2); margin-top: 2px; }
   .costo-amount {
-    font-size: 22px; font-weight: 800; color: var(--gold);
+    font-size: 22px; font-weight: 800; color: var(--blue-bright);
     flex-shrink: 0;
   }
   .costo-detail { padding: 12px 18px; }
@@ -277,7 +287,7 @@
   .costo-row:last-child { border-bottom: none; }
   .cr-label { color: var(--t2); }
   .cr-value { font-weight: 700; color: #fff; }
-  .cr-value.gold { color: var(--gold); }
+  .cr-value.gold { color: var(--blue-bright); }
 
   /* INFO BOXES */
   .info-box {
@@ -332,23 +342,23 @@
   .cta-final {
     margin: 24px 16px 0;
     background: linear-gradient(135deg, var(--bg2), var(--bg3));
-    border: 1px solid var(--gold-border);
+    border: 1px solid var(--blue-border);
     border-radius: var(--radius);
     padding: 28px 20px; text-align: center;
     position: relative; overflow: hidden;
-    background-image: radial-gradient(ellipse at 50% 0%, rgba(200,151,58,0.1) 0%, transparent 55%);
+    background-image: radial-gradient(ellipse at 50% 0%, rgba(0,61,165,0.2) 0%, transparent 55%);
   }
   .cta-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; line-height: 1.2; }
-  .cta-title span { color: var(--gold); }
+  .cta-title span { color: var(--blue-bright); }
   .cta-sub { font-size: 14px; color: var(--t2); margin-bottom: 20px; line-height: 1.5; }
   .cta-btn {
     display: block; width: 100%;
-    background: var(--gold); color: var(--bg);
+    background: var(--blue); color: var(--white);
     border: none; border-radius: 50px;
     font-size: 15px; font-weight: 700;
     padding: 16px; cursor: pointer;
     text-decoration: none; margin-bottom: 10px;
-    box-shadow: 0 8px 24px rgba(200,151,58,0.4);
+    box-shadow: 0 8px 24px rgba(0,61,165,0.5);
     transition: opacity .15s;
   }
   .cta-btn:active { opacity: .85; }
@@ -449,7 +459,7 @@
         </div>
 
         <div class="paso" style="border-bottom:none;">
-          <div class="paso-num" style="background:var(--gold-dim);border-color:var(--gold-border);color:var(--gold);">🏅</div>
+          <div class="paso-num" style="background:var(--blue-dim);border-color:var(--blue-border);color:var(--blue-bright);">🏅</div>
           <div>
             <div class="paso-title">¡Inicia entrenamientos!</div>
             <div class="paso-desc">Tu hijo ya es parte oficial de Club Borregos Santa Anita. ¡Bienvenido al equipo!</div>
@@ -494,7 +504,7 @@
       <div class="ps-num">4</div>
       <div>
         <div class="ps-title">Alta en el chat del grupo</div>
-        <div class="ps-desc">Se les agregará al chat de WhatsApp de su disciplina para recibir actualizaciones importantes. <span style="color:var(--gold);">Si no los agregan en los primeros días, favor de recordarlo.</span></div>
+        <div class="ps-desc">Se les agregará al chat de WhatsApp de su disciplina para recibir actualizaciones importantes. <span style="color:var(--blue-bright);">Si no los agregan en los primeros días, favor de recordarlo.</span></div>
       </div>
     </div>
 
@@ -512,7 +522,7 @@
     <!-- Basquetbol -->
     <div class="disc-card animate-in">
       <div class="disc-header" style="background:linear-gradient(135deg,rgba(200,151,58,0.1) 0%,transparent 60%);">
-        <div class="disc-icon" style="background:var(--gold-dim);border:1px solid var(--gold-border);">🏀</div>
+        <div class="disc-icon" style="background:var(--blue-dim);border:1px solid var(--gold-border);">🏀</div>
         <div>
           <div class="disc-name">Basquetbol</div>
           <div class="disc-desc">Coordinación, estrategia, trabajo en equipo y confianza dentro y fuera de la cancha.</div>
@@ -688,7 +698,7 @@
 
   <!-- CTA Final -->
   <div class="cta-final">
-    <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;">✦ ¿Listo para unirte?</div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--blue-bright);margin-bottom:8px;">✦ ¿Listo para unirte?</div>
     <div class="cta-title">El primer paso<br>es <span>escribirnos</span></div>
     <div class="cta-sub">Resolvemos tus dudas y agendamos la clase de prueba sin ningún compromiso.</div>
     <a href="https://wa.me/525654324415?text=Hola%2C%20me%20interesa%20inscribir%20a%20mi%20hijo%20en%20Club%20Borregos%20Santa%20Anita.%20%C2%BFPueden%20darme%20informes%3F" target="_blank" class="cta-btn">Escribir por WhatsApp 💬</a>
