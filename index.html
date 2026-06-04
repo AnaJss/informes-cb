@@ -53,12 +53,13 @@
   #splash.out { opacity: 0; transform: scale(.97); pointer-events: none; }
 
   .splash-logo {
-    width: 80px; height: 80px; border-radius: 50%;
-    background: var(--gold);
+    width: 100px; height: 100px; border-radius: 50%;
+    background: var(--bg2);
+    border: 2px solid var(--gold-border);
     display: flex; align-items: center; justify-content: center;
-    font-size: 32px; font-weight: 800; color: var(--bg);
     margin-bottom: 24px;
     animation: pulse 2.5s ease-in-out infinite;
+    overflow: hidden; padding: 12px;
   }
   @keyframes pulse {
     0%,100% { box-shadow: 0 0 0 0 rgba(200,151,58,0.4); }
@@ -107,9 +108,9 @@
   }
   .tb-icon {
     width: 36px; height: 36px; border-radius: 10px;
-    background: var(--gold); color: var(--bg);
+    background: var(--bg3); border: 1px solid var(--gold-border);
     display: flex; align-items: center; justify-content: center;
-    font-size: 18px; font-weight: 800; flex-shrink: 0;
+    flex-shrink: 0; padding: 5px; overflow: hidden;
   }
   .tb-title { font-size: 16px; font-weight: 800; color: #fff; }
   .tb-sub { font-size: 11px; color: var(--t2); margin-top: 1px; }
@@ -134,9 +135,12 @@
     position: relative; overflow: hidden;
   }
   .hero::before {
-    content: '🏈';
+    content: '';
     position: absolute; right: -8px; top: -8px;
-    font-size: 80px; opacity: .07;
+    width: 100px; height: 100px;
+    background-image: url('logo_blancoClubBorregos.png');
+    background-size: contain; background-repeat: no-repeat;
+    opacity: .06;
     pointer-events: none;
   }
   .hero-eyebrow {
@@ -355,7 +359,7 @@
 
 <!-- SPLASH -->
 <div id="splash">
-  <div class="splash-logo">🏈</div>
+  <div class="splash-logo"><img src="logo_blancoClubBorregos.png" alt="Club Borregos" style="width:100%;height:100%;object-fit:contain;"></div>
   <div class="splash-title">Club Borregos<br>Santa Anita</div>
   <div class="splash-sub">Informes de ingreso · Temporada 2025</div>
   <div class="splash-badge">🏀 Basquetbol · 🏐 Voleibol · 🏈 Tochito</div>
@@ -367,7 +371,7 @@
 <div id="app">
 
   <div class="top-bar">
-    <div class="tb-icon">🏈</div>
+    <div class="tb-icon"><img src="logo_blancoClubBorregos.png" alt="Club Borregos" style="width:100%;height:100%;object-fit:contain;"></div>
     <div>
       <div class="tb-title">Club Borregos</div>
       <div class="tb-sub">Santa Anita · Informes de ingreso</div>
@@ -568,7 +572,7 @@
     <!-- Tochito -->
     <div class="disc-card animate-in">
       <div class="disc-header" style="background:linear-gradient(135deg,rgba(52,199,89,0.1) 0%,transparent 60%);">
-        <div class="disc-icon" style="background:var(--green-dim);border:1px solid var(--green-border);">🏈</div>
+        <div class="disc-icon" style="background:var(--green-dim);border:1px solid var(--green-border);padding:8px;"><img src="logo_blancoClubBorregos.png" alt="Tochito" style="width:100%;height:100%;object-fit:contain;"></div>
         <div>
           <div class="disc-name">Tochito</div>
           <div class="disc-desc">Velocidad, agilidad y trabajo en equipo en una disciplina dinámica y divertida.</div>
