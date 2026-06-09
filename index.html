@@ -337,6 +337,8 @@ var SD=[
 {id:'PSTA115',name:'Ximena Valentina Torres García',gid:'vol-a',status:'baja',edad:'14',mayo:1,pin:'',padre:'Gabriela García',vc:'BRG28NB',dob:'21112011'}
 ];
 
+var showPins = {};
+
 // ── Security ──────────────────────────────────────────────────
 var MAX_ATTEMPTS  = 5;
 var LOCK_SECONDS  = 300; // 5 minutes
@@ -402,6 +404,12 @@ function updateLockTimer() {
 }
 
 // ── Search ────────────────────────────────────────────────────
+function tgPin(btn) {
+  var sid = btn.getAttribute('data-sid');
+  showPins[sid] = !showPins[sid];
+  renderResult();
+}
+
 function buscar() {
   if (isLocked()) return;
 
